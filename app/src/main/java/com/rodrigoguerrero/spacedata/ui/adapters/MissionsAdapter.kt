@@ -29,7 +29,7 @@ class MissionsAdapter @Inject constructor() :
     fun addItems(missions: List<SpaceMission>) {
         this.missions.clear()
         this.missions.addAll(missions)
-        notifyItemRangeInserted(0, this.missions.size - 1)
+        notifyDataSetChanged()
     }
 
     inner class MissionViewHolder(private val binding: MissionItemBinding) :

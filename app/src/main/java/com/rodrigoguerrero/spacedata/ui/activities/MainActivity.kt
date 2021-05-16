@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rodrigoguerrero.spacedata.R
+import com.rodrigoguerrero.spacedata.data.SortType
 import com.rodrigoguerrero.spacedata.databinding.ActivityMainBinding
 import com.rodrigoguerrero.spacedata.ui.adapters.MissionsAdapter
 import com.rodrigoguerrero.spacedata.ui.viewmodels.MainViewModel
@@ -40,9 +41,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.menu_sort_by_date -> {
+            viewModel.saveSortType(SortType.Year)
             true
         }
         R.id.menu_sort_by_name -> {
+            viewModel.saveSortType(SortType.Name)
             true
         }
         else -> super.onOptionsItemSelected(item)

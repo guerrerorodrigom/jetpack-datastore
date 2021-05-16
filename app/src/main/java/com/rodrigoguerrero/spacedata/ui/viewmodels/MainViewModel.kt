@@ -7,13 +7,17 @@ import androidx.lifecycle.viewModelScope
 import com.rodrigoguerrero.spacedata.data.SortType
 import com.rodrigoguerrero.spacedata.data.SpaceMission
 import com.rodrigoguerrero.spacedata.data.SpaceMissions
+import com.rodrigoguerrero.spacedata.datastore.DataStoreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor() : ViewModel() {
+class MainViewModel @Inject constructor(
+    private val dataStoreRepository: DataStoreRepository
+) : ViewModel() {
 
     private val _spaceMissions: MutableLiveData<List<SpaceMission>> = MutableLiveData()
     val spaceMissions: LiveData<List<SpaceMission>>
@@ -21,14 +25,21 @@ class MainViewModel @Inject constructor() : ViewModel() {
 
     fun getSpaceMissions() {
         viewModelScope.launch {
-            SpaceMissions().collect { missions ->
-                _spaceMissions.value = when (getSortType()) {
-                    SortType.Name -> missions.sortedBy { it.name }
-                    SortType.Year -> missions.sortedBy { it.date }
+            dataStoreRepository.getSortingType()
+                .combine(SpaceMissions()) { sortType, missions ->
+                    _spaceMissions.value = when (sortType) {
+                        SortType.Name -> missions.sortedBy { it.name }
+                        SortType.Year -> missions.sortedBy { it.date }
+                    }
                 }
-            }
+                .collect()
         }
     }
 
-    private fun getSortType(): SortType = SortType.Year
+    fun saveSortType(sortType: SortType) {
+        viewModelScope.launch {
+            dataStoreRepository.saveSortingType(sortType)
+            getSpaceMissions()
+        }
+    }
 }

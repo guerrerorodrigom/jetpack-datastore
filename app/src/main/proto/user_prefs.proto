@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option java_package = "com.rodrigoguerrero.spacedata";
+option java_multiple_files = true;
+
+message UserPrefs {
+    enum Selected {
+        NOT_SET = 0;
+        SELECTED = 1;
+        UNSELECTED = 2;
+    }
+    Selected mercury_selected = 1;
+    Selected gemini_selected = 2;
+    Selected apollo_selected = 3;
+}

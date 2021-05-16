@@ -63,11 +63,30 @@ class MainActivity : AppCompatActivity() {
             )
             adapter = missionsAdapter
         }
+
+        binding.showApollo.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.showApollo(isChecked)
+        }
+
+        binding.showGemini.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.showGemini(isChecked)
+        }
+
+        binding.showMercury.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.showMercury(isChecked)
+        }
     }
 
     private fun startObserving() {
         viewModel.spaceMissions.observe(this) { missions ->
             missionsAdapter.addItems(missions)
+        }
+        viewModel.userPrefs.observe(this) { prefs ->
+            with(binding) {
+                showMercury.isChecked = prefs.mercurySelected
+                showGemini.isChecked = prefs.geminiSelected
+                showApollo.isChecked = prefs.apolloSelected
+            }
         }
     }
 }

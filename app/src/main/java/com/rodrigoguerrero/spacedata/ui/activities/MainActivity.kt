@@ -1,10 +1,13 @@
 package com.rodrigoguerrero.spacedata.ui.activities
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.rodrigoguerrero.spacedata.R
 import com.rodrigoguerrero.spacedata.databinding.ActivityMainBinding
 import com.rodrigoguerrero.spacedata.ui.adapters.MissionsAdapter
 import com.rodrigoguerrero.spacedata.ui.viewmodels.MainViewModel
@@ -28,6 +31,21 @@ class MainActivity : AppCompatActivity() {
         initViews()
 
         viewModel.getSpaceMissions()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.menu_sort_by_date -> {
+            true
+        }
+        R.id.menu_sort_by_name -> {
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 
     private fun initViews() {

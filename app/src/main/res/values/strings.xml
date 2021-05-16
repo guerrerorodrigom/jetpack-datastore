@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SpaceData</string>
+    <string name="sort">Sort by Date</string>
+    <string name="sort_by_name">Sort by Name</string>
+    <string name="mercury">Mercury</string>
+    <string name="gemini">Gemini</string>
+    <string name="apollo">Apollo</string>
+</resources>
